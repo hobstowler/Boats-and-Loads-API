@@ -1,0 +1,5 @@
+from flask import Flask, request, jsonify
+from google.cloud import datastore
+
+app = Flask(__name__, instance_relative_config=True)
+client = datastore.Client()
