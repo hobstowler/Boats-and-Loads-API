@@ -1,3 +1,5 @@
+from functools import wraps
+from flask import request
 from google.auth.transport import requests
 from google.oauth2 import id_token
 
@@ -19,3 +21,16 @@ def verify_jwt(request):
         return None
     except Exception as e:
         return None
+
+
+def require_jwt(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        payload = verify_jwt(request)
+        return func(payload)
+    return wrapper
+
+
+@require_jwt
+def test_func(payload):
+    print(payload)

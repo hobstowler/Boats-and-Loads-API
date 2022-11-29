@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from google.cloud import datastore
-from verification import verify_jwt
+from verification import verify_jwt, require_jwt
 
 client = datastore.Client()
 
@@ -8,9 +8,9 @@ bp = Blueprint('users', __name__, url_prefix='/users')
 
 
 @bp.route('/', methods=['GET', 'POST'])
-def users():
+@require_jwt
+def users(payload):
     if request.method == 'GET':
-        payload = verify_jwt()
         if payload is None:
             return get_all_users(request)
         else:
@@ -27,7 +27,7 @@ def login():
 
 
 @bp.route('/new', methods=['GET','POST'])
-def register_user(request):
+def register_user():
     if request.method == 'POST':
         if request.is_json:
             pass
