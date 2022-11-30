@@ -15,9 +15,9 @@ def loads():
         return create_load(request)
 
 
-def get_loads(request: flask.Request):
+def get_loads(request: flask.Request, sub):
     query = client.query(kind="Load")
-    limit = int(request.args.get('limit', '3'))
+    limit = int(request.args.get('limit', '5'))
     offset = int(request.args.get('offset', '0'))
     l_iterator = query.fetch(limit=limit, offset=offset)
     pages = l_iterator.pages

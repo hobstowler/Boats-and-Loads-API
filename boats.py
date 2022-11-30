@@ -2,33 +2,46 @@ import flask
 from flask import Blueprint, request, jsonify
 from google.cloud import datastore
 
+from verification import require_jwt
+
 client = datastore.Client()
 
 bp = Blueprint('boats', __name__, url_prefix='/boats')
 
 
 @bp.route('/', methods=['GET', 'POST'])
-def boats():
-    if request.method == 'GET':  # get all boats
-        return get_boats()
+@require_jwt
+def boats(payload):
+    if payload is None:
+        return '', 401
 
+    sub = payload['sub']
+    if request.method == 'GET':  # get all boats
+        return get_boats(sub)
     elif request.method == 'POST':  # create a boat
-        return create_boat(request)
+        return create_boat(request, sub)
 
 
 @bp.route('/<boat_id>', methods=['GET', 'DELETE', 'PATCH'])
-def boat(boat_id: str):
+@require_jwt
+def boat(boat_id: str, payload):
+    if payload is None:
+        return '', 401
+
     key = client.key('Boat', int(boat_id))
     boat = client.get(key)
 
+    sub = payload['sub']
+    boat = None if not is_owner(boat, sub) else boat
+
     # if boat does not exist, then return 404
     if not boat:
-        return jsonify({"Error": "No boat with this boat_id exists"}), 404
+        return jsonify({"Error": "No boat with this boat_id exists or this boat is owned by someone else."}), 404
 
     if request.method == 'GET':  # get an existing boat
         return get_boat(request, boat)
 
-    elif request.method == 'DELETE':  # delete an existing boat and release any slips
+    elif request.method == 'DELETE':  # delete an existing boat and delete any loads
         return delete_boat(key, boat)
 
     elif request.method == 'PATCH':  # edit an existing boat
@@ -36,17 +49,55 @@ def boat(boat_id: str):
 
 
 @bp.route('/<boat_id>/loads', methods=['GET'])
-def get_boat_loads(boat_id: str):
+@require_jwt
+def get_boat_loads(boat_id: str, payload):
+    if payload is None:
+        return '', 401
+
     if request.method == 'GET':
-        return get_loads_on_boat(boat_id)
+        key = client.key('Boat', int(boat_id))
+        boat = client.get(key)
+
+        sub = payload['sub']
+        boat = None if not is_owner(boat, sub) else boat
+
+        # if boat does not exist, then return 404
+        if not boat:
+            return jsonify({"Error": "No boat with this boat_id exists"}), 404
+
+        result = dict(boat)
+        result['id'] = boat.id
+        result['self'] = f'{request.host_url}boats/{boat_id}'
+        boat_loads = []
+        result['loads'] = boat_loads
+
+        query = client.query(kind='Load')
+        query.add_filter("carrier.id", "=", boat.id)
+        loads = query.fetch()
+        for load in loads:
+            l = dict(load)
+            l.update({
+                'id': load.id,
+                'self': f'{request.host_url}loads/{load.id}'
+            })
+            boat_loads.append(l)
+
+        return jsonify(result), 200
 
 
 @bp.route('/<boat_id>/loads/<load_id>', methods=['PUT', 'DELETE'])
-def loads_on_boats(boat_id, load_id):
+@require_jwt
+def loads_on_boats(boat_id, load_id, payload):
+    if payload is None:
+        return '', 401
+
     load_key = client.key('Load', int(load_id))
     load = client.get(load_key)
     boat_key = client.key('Boat', int(boat_id))
     boat = client.get(boat_key)
+
+    sub = payload['sub']
+    boat = None if not is_owner(boat, sub) else boat
 
     if request.method == 'PUT':
         return assign_load_to_boat(boat, load)
@@ -54,32 +105,10 @@ def loads_on_boats(boat_id, load_id):
         return remove_load_from_boat(boat, load)
 
 
-def get_loads_on_boat(boat_id: str):
-    key = client.key('Boat', int(boat_id))
-    boat = client.get(key)
-
-    # if boat does not exist, then return 404
-    if not boat:
-        return jsonify({"Error": "No boat with this boat_id exists"}), 404
-
-    result = dict(boat)
-    result['id'] = boat.id
-    result['self'] = f'{request.host_url}boats/{boat_id}'
-    boat_loads = []
-    result['loads'] = boat_loads
-
-    query = client.query(kind='Load')
-    query.add_filter("carrier.id", "=", boat.id)
-    loads = query.fetch()
-    for load in loads:
-        l = dict(load)
-        l.update({
-            'id': load.id,
-            'self': f'{request.host_url}loads/{load.id}'
-        })
-        boat_loads.append(l)
-
-    return jsonify(result), 200
+def is_owner(boat, sub):
+    if boat['captain_id'] != sub:
+        return False
+    return True
 
 
 def get_boat(request, boat):
@@ -95,9 +124,10 @@ def get_boat(request, boat):
     return jsonify(res), 200
 
 
-def get_boats():
+def get_boats(sub):
     query = client.query(kind="Boat")
-    limit = int(request.args.get('limit', '3'))
+    query.add_filter('captain_id', '=', sub)
+    limit = int(request.args.get('limit', '5'))
     offset = int(request.args.get('offset', '0'))
     l_iterator = query.fetch(limit=limit, offset=offset)
     pages = l_iterator.pages
@@ -124,7 +154,7 @@ def get_boats():
     return jsonify(output), 200
 
 
-def create_boat(request: flask.Request):
+def create_boat(request: flask.Request, sub):
     json = request.get_json()
     try:
         name = json['name']
@@ -136,6 +166,7 @@ def create_boat(request: flask.Request):
         boat = datastore.Entity(client.key("Boat"))
         boat.update({
             'name': name,
+            'captain_id': sub,
             'type': boat_type,
             'length': length,
             'loads': []
@@ -214,31 +245,3 @@ def remove_load_from_boat(boat, load):
     client.put(load)
 
     return jsonify({}), 204
-
-
-def get_loads_on_boat(boat_id: str):
-    key = client.key('Boat', int(boat_id))
-    boat = client.get(key)
-
-    # if boat does not exist, then return 404
-    if not boat:
-        return jsonify({"Error": "No boat with this boat_id exists"}), 404
-
-    result = dict(boat)
-    result['id'] = boat.id
-    result['self'] = f'{request.host_url}boats/{boat_id}'
-    boat_loads = []
-    result['loads'] = boat_loads
-
-    query = client.query(kind='Load')
-    query.add_filter("carrier.id", "=", boat.id)
-    loads = query.fetch()
-    for load in loads:
-        l = dict(load)
-        l.update({
-            'id': load.id,
-            'self': f'{request.host_url}loads/{load.id}'
-        })
-        boat_loads.append(l)
-
-    return jsonify(result), 200

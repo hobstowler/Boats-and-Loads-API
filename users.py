@@ -7,14 +7,10 @@ client = datastore.Client()
 bp = Blueprint('users', __name__, url_prefix='/users')
 
 
-@bp.route('/', methods=['GET', 'POST'])
-@require_jwt
+@bp.route('/', methods=['GET'])
 def users(payload):
     if request.method == 'GET':
-        if payload is None:
-            return get_all_users(request)
-        else:
-            pass
+        return get_all_users(request)
     elif request.method == 'POST' and request.is_json:
         pass
     else:
@@ -37,7 +33,15 @@ def register_user():
         pass
 
 
-def get_all_users(request):
-    pass
+def get_all_users():
+    query = client.query(kind='User')
+    results = query.fetch()
+    res = []
+    for result in results:
+        user = dict(result)
+        user['id'] = result.id
+        res.append(user)
+    return jsonify(res), 200
+
 
 

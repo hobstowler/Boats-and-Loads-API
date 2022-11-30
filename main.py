@@ -32,7 +32,7 @@ def index():
     start_url = f'{request.base_url}oauth'
     return f'<h1>Welcome!</h1>' \
            f'<p><a href={start_url}>Authenticate</a> with Google to generate a JWT. ' \
-           f'If this is your first time, an account will be created for you.</p>', 200
+           f'If this is your first time logging in, an account will be created for you.</p>', 200
 
 
 @app.route('/oauth', methods=['GET'])
@@ -101,7 +101,7 @@ def register_new_user(jwt, name, last_name) -> str:
         return
     query = client.query(kind='User')
     query.add_filter("sub", "=", payload['sub'])
-    results = query.fetch()
+    results = query.fetch(limit=1)
     if results is None:
         user = datastore.Entity(client.key('User"'))
         user.update({
@@ -109,6 +109,7 @@ def register_new_user(jwt, name, last_name) -> str:
             'last_name': last_name,
             'sub': payload['sub']
         })
+        client.put(user)
     return payload['sub']
 
 
@@ -117,10 +118,12 @@ def register_new_user(jwt, name, last_name) -> str:
 def user_info():
     given_name = request.args.get('givenName')
     family_name = request.args.get('familyName')
+    sub = request.args.get('sub')
     jwt = request.args.get('jwt')
 
     return f'<h1>Given Name</h1><p>{given_name}</p>' \
            f'<h1>Family Name</h1><p>{family_name}</p>' \
+           f'<h1>sub</h1><p>{sub}</p>' \
            f'<h1>JWT Token</h1><p>{jwt}</p>'
 
 
