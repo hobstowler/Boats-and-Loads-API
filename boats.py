@@ -127,9 +127,29 @@ def edit_boat(boat, request):
         boat['name'] = name
         boat['type'] = boat_type
         boat['length'] = length
+        client.put(boat)
+
         res = dict(boat)
         res['id'] = boat.id
+
         return jsonify(res), 200
+
+
+def patch_boat(boat, request):
+    json = request.json
+    name = json['name'] if 'name' in json else None
+    boat_type = json['type'] if 'type' in json else None
+    length = json['length'] if 'length' in json else None
+
+    boat['name'] = name if name else boat['name']
+    boat['type'] = boat_type if boat_type else boat['type']
+    boat['length'] = length if length else boat['length']
+    client.put(boat)
+
+    res = dict(boat)
+    res['id'] = boat.id
+
+    return jsonify(res), 200
 
 
 def delete_boat(key, boat):

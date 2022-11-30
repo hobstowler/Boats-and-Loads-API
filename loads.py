@@ -2,6 +2,8 @@ import flask
 from flask import Blueprint, request, jsonify
 from google.cloud import datastore
 
+from verification import require_jwt
+
 client = datastore.Client()
 
 bp = Blueprint('loads', __name__, url_prefix='/loads')
@@ -15,8 +17,9 @@ def loads():
         return create_load(request)
 
 
-def get_loads(request: flask.Request, sub):
+def get_loads(request: flask.Request):
     query = client.query(kind="Load")
+    query.add_filter('carrier', '=', None)
     limit = int(request.args.get('limit', '5'))
     offset = int(request.args.get('offset', '0'))
     l_iterator = query.fetch(limit=limit, offset=offset)
@@ -29,10 +32,6 @@ def get_loads(request: flask.Request, sub):
         next_url = None
 
     results = []
-    output = {
-        "next": next_url,
-        "loads": results
-    }
     for load in loads:
         res = dict(load)
         if load['carrier']:
@@ -40,6 +39,11 @@ def get_loads(request: flask.Request, sub):
         res['id'] = load.id
         res['self'] = f'{request.host_url}loads/{load.id}'
         results.append(res)
+    output = {
+        "next": next_url,
+        "total": len(results),
+        "loads": results
+    }
     return jsonify(output)
 
 
@@ -66,7 +70,7 @@ def create_load(request: flask.Request):
         return jsonify(res), 201
 
 
-@bp.route('/<load_id>', methods=['GET', 'DELETE'])
+@bp.route('/<load_id>', methods=['GET', 'PUT', 'PATCH', 'DELETE'])
 def load(load_id: str):
     key = client.key('Load', int(load_id))
     load = client.get(key)
@@ -77,6 +81,10 @@ def load(load_id: str):
 
     if request.method == 'GET':
         return get_load(load)
+    elif request.method == 'PUT':
+        return put_load(load)
+    elif request.method == 'PATCH':
+        return patch_load(load)
     elif request.method == 'DELETE':
         return delete_load(key, load)
 
@@ -96,6 +104,20 @@ def get_load(load):
         }
 
     return jsonify(res), 200
+
+
+def put_load(load):
+    json = request.get_json()
+    try:
+        volume = json['volume']
+        item = json['item']
+        creation_date = json['creation_date']
+    except KeyError as e:
+        return jsonify({'Error': "The request object is missing at least one of the required attributes"}), 400
+
+
+def patch_load(load):
+    pass
 
 
 def delete_load(key, load):
