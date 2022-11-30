@@ -81,9 +81,21 @@ def return_auth():
         if res.status_code == 200:
             res_json = res.json()
             id_token = res_json["id_token"]
-            given_name = res_json["names"]["givenName"]
-            family_name = res_json["names"]["familyName"]
+            access_token = res_json['access_token']
+
+            res = req.get('https://people.googleapis.com/v1/people/me?personFields=names', headers={
+                "Authorization": f"Bearer {access_token}"
+            })
+            names = res.json()["names"]
+            for name in names:
+                if name["metadata"]["primary"] == True:
+                    names = name
+                    break
+            given_name = names["givenName"]
+            family_name = names["familyName"]
+            print(given_name, family_name)
             sub = register_new_user(id_token, given_name, family_name)  # assume JWT is always valid here.
+
             return flask.redirect(f'{request.host_url}userInfo'
                                   f'?jwt={id_token}'
                                   f'&sub={sub}'
@@ -101,9 +113,9 @@ def register_new_user(jwt, name, last_name) -> str:
         return
     query = client.query(kind='User')
     query.add_filter("sub", "=", payload['sub'])
-    results = query.fetch(limit=1)
-    if results is None:
-        user = datastore.Entity(client.key('User"'))
+    results = query.fetch()
+    if len(list(results)) == 0:
+        user = datastore.Entity(client.key('User'))
         user.update({
             'given_name': name,
             'last_name': last_name,

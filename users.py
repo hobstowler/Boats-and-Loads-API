@@ -7,30 +7,15 @@ client = datastore.Client()
 bp = Blueprint('users', __name__, url_prefix='/users')
 
 
-@bp.route('/', methods=['GET'])
-def users(payload):
+@bp.route('/', methods=['GET', 'POST', 'DELETE', 'PUT', 'PATCH'])
+def users():
     if request.method == 'GET':
-        return get_all_users(request)
-    elif request.method == 'POST' and request.is_json:
-        pass
-    else:
-        return '', 406
-
-
-@bp.route('/login', methods=['POST'])
-def login():
-    pass
-
-
-@bp.route('/new', methods=['GET','POST'])
-def register_user():
-    if request.method == 'POST':
-        if request.is_json:
-            pass
+        if request.accept_mimetypes.accept_json:
+            return get_all_users()
         else:
-            return '', 415
-    elif request.method == 'GET':
-        pass
+            return '', 406
+    else:
+        return '', 405
 
 
 def get_all_users():

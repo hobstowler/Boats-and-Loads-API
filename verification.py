@@ -3,7 +3,7 @@ from flask import request
 from google.auth.transport import requests
 from google.oauth2 import id_token
 
-client_id = '38857299416-r6gj2pdtsdhbk1cuskul5culi0g9ojvi.apps.googleusercontent.com'
+client_id = '919311581908-6gos83n2k2e6nd81emjd3qf77171od82.apps.googleusercontent.com'
 
 
 # Verify the JWT in the request's Authorization header
@@ -23,14 +23,17 @@ def verify_jwt(request):
         return None
 
 
+def decode_jwt(token):
+    try:
+        return id_token.verify_oauth2_token(token, requests.Request(), client_id)
+    except ValueError:
+        return None
+    except Exception:
+        return None
+
 def require_jwt(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         payload = verify_jwt(request)
         return func(payload)
     return wrapper
-
-
-@require_jwt
-def test_func(payload):
-    print(payload)
