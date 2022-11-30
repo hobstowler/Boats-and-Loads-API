@@ -22,108 +22,6 @@ def boats(payload):
         return create_boat(request, sub)
 
 
-@bp.route('/<boat_id>', methods=['GET', 'DELETE', 'PATCH'])
-@require_jwt
-def boat(boat_id: str, payload):
-    if payload is None:
-        return '', 401
-
-    key = client.key('Boat', int(boat_id))
-    boat = client.get(key)
-
-    sub = payload['sub']
-    boat = None if not is_owner(boat, sub) else boat
-
-    # if boat does not exist, then return 404
-    if not boat:
-        return jsonify({"Error": "No boat with this boat_id exists or this boat is owned by someone else."}), 404
-
-    if request.method == 'GET':  # get an existing boat
-        return get_boat(request, boat)
-
-    elif request.method == 'DELETE':  # delete an existing boat and delete any loads
-        return delete_boat(key, boat)
-
-    elif request.method == 'PATCH':  # edit an existing boat
-        return edit_boat(boat, request)
-
-
-@bp.route('/<boat_id>/loads', methods=['GET'])
-@require_jwt
-def get_boat_loads(boat_id: str, payload):
-    if payload is None:
-        return '', 401
-
-    if request.method == 'GET':
-        key = client.key('Boat', int(boat_id))
-        boat = client.get(key)
-
-        sub = payload['sub']
-        boat = None if not is_owner(boat, sub) else boat
-
-        # if boat does not exist, then return 404
-        if not boat:
-            return jsonify({"Error": "No boat with this boat_id exists"}), 404
-
-        result = dict(boat)
-        result['id'] = boat.id
-        result['self'] = f'{request.host_url}boats/{boat_id}'
-        boat_loads = []
-        result['loads'] = boat_loads
-
-        query = client.query(kind='Load')
-        query.add_filter("carrier.id", "=", boat.id)
-        loads = query.fetch()
-        for load in loads:
-            l = dict(load)
-            l.update({
-                'id': load.id,
-                'self': f'{request.host_url}loads/{load.id}'
-            })
-            boat_loads.append(l)
-
-        return jsonify(result), 200
-
-
-@bp.route('/<boat_id>/loads/<load_id>', methods=['PUT', 'DELETE'])
-@require_jwt
-def loads_on_boats(boat_id, load_id, payload):
-    if payload is None:
-        return '', 401
-
-    load_key = client.key('Load', int(load_id))
-    load = client.get(load_key)
-    boat_key = client.key('Boat', int(boat_id))
-    boat = client.get(boat_key)
-
-    sub = payload['sub']
-    boat = None if not is_owner(boat, sub) else boat
-
-    if request.method == 'PUT':
-        return assign_load_to_boat(boat, load)
-    elif request.method == 'DELETE':
-        return remove_load_from_boat(boat, load)
-
-
-def is_owner(boat, sub):
-    if boat['captain_id'] != sub:
-        return False
-    return True
-
-
-def get_boat(request, boat):
-    res = dict(boat)
-    res['id'] = boat.id
-    res['self'] = f'{request.base_url}'
-    res['loads'] = []
-    for load in boat['loads']:
-        res['loads'].append({
-            "id": load['id'],
-            "self": f'{request.host_url}loads/{load["id"]}'
-        })
-    return jsonify(res), 200
-
-
 def get_boats(sub):
     query = client.query(kind="Boat")
     query.add_filter('captain_id', '=', sub)
@@ -178,6 +76,45 @@ def create_boat(request: flask.Request, sub):
         return jsonify(res), 201
 
 
+@bp.route('/<boat_id>', methods=['GET', 'DELETE', 'PATCH'])
+@require_jwt
+def boat(boat_id: str, payload):
+    if payload is None:
+        return '', 401
+
+    key = client.key('Boat', int(boat_id))
+    boat = client.get(key)
+
+    sub = payload['sub']
+    boat = None if not is_owner(boat, sub) else boat
+
+    # if boat does not exist, then return 404
+    if not boat:
+        return jsonify({"Error": "No boat with this boat_id exists or this boat is owned by someone else."}), 404
+
+    if request.method == 'GET':  # get an existing boat
+        return get_boat(request, boat)
+
+    elif request.method == 'DELETE':  # delete an existing boat and delete any loads
+        return delete_boat(key, boat)
+
+    elif request.method == 'PATCH':  # edit an existing boat
+        return edit_boat(boat, request)
+
+
+def get_boat(request, boat):
+    res = dict(boat)
+    res['id'] = boat.id
+    res['self'] = f'{request.base_url}'
+    res['loads'] = []
+    for load in boat['loads']:
+        res['loads'].append({
+            "id": load['id'],
+            "self": f'{request.host_url}loads/{load["id"]}'
+        })
+    return jsonify(res), 200
+
+
 def edit_boat(boat, request):
     json = request.json
     try:
@@ -214,9 +151,36 @@ def delete_boat(key, boat):
     return jsonify({}), 204
 
 
+@bp.route('/<boat_id>/loads/<load_id>', methods=['PUT', 'DELETE'])
+@require_jwt
+def loads_on_boats(boat_id, load_id, payload):
+    if payload is None:
+        return '', 401
+
+    load_key = client.key('Load', int(load_id))
+    load = client.get(load_key)
+    boat_key = client.key('Boat', int(boat_id))
+    boat = client.get(boat_key)
+
+    sub = payload['sub']
+    boat = None if not is_owner(boat, sub) else boat
+
+    if request.method == 'PUT':
+        return assign_load_to_boat(boat, load)
+    elif request.method == 'DELETE':
+        return remove_load_from_boat(boat, load)
+
+
+def is_owner(boat, sub):
+    if boat['captain_id'] != sub:
+        return False
+    return True
+
+
 def assign_load_to_boat(boat, load):
     if not boat or not load:
-        return jsonify({"Error": "The specified boat and/or load does not exist"}), 404
+        return jsonify({"Error": "No load with this load_id exists or no boat with this "
+                                 "boat_id exists or the boat is owned by someone else."}), 404
 
     if load['carrier']:
         return jsonify({"Error": "The load is already loaded on another boat"}), 403
@@ -231,9 +195,11 @@ def assign_load_to_boat(boat, load):
 
 def remove_load_from_boat(boat, load):
     if not load or not boat or not load['carrier']:
-        return jsonify({"Error": "No boat with this boat_id is loaded with the load with this load_id"}), 404
+        return jsonify({"Error": "No boat with this boat_id is loaded with the load with "
+                                 "this load_id or the boat is owned by someone else."}), 404
 
-    if load['carrier']['id'] != boat.id or (len(boat['loads']) != 0 and load.id not in [k['id'] for k in list(boat['loads'])]):
+    if load['carrier']['id'] != boat.id or \
+            (len(boat['loads']) != 0 and load.id not in [k['id'] for k in list(boat['loads'])]):
         return jsonify({"Error": "No boat with this boat_id is loaded with the load with this load_id"}), 404
 
     load['carrier'] = None
