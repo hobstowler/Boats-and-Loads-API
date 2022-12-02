@@ -17,6 +17,8 @@ def loads():
     if request.method == 'GET':
         return get_loads(request)
     elif request.method == 'POST':
+        if not request.is_json:
+            return '', 415
         return create_load(request)
     else:
         return '', 405
