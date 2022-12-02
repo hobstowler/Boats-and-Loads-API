@@ -93,7 +93,7 @@ def create_boat(request: flask.Request, sub):
 @require_jwt
 def boat(boat_id: str, payload):
     if payload is None:
-        return '', 401
+        return jsonify({'error': 'JWT missing, expired, or invalid'}), 401
 
     key = client.key('Boat', int(boat_id))
     boat = client.get(key)
