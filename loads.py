@@ -9,17 +9,23 @@ client = datastore.Client()
 bp = Blueprint('loads', __name__, url_prefix='/loads')
 
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 def loads():
+    if not request.accept_mimetypes.accept_json:
+        return '', 406
+
     if request.method == 'GET':
         return get_loads(request)
     elif request.method == 'POST':
         return create_load(request)
+    else:
+        return '', 405
 
 
 def get_loads(request: flask.Request):
     query = client.query(kind="Load")
-    query.add_filter('carrier', '=', None)
+    #query.add_filter('carrier', '=', None)
+    total = len(list(query.fetch()))
     limit = int(request.args.get('limit', '5'))
     offset = int(request.args.get('offset', '0'))
     l_iterator = query.fetch(limit=limit, offset=offset)
@@ -41,7 +47,7 @@ def get_loads(request: flask.Request):
         results.append(res)
     output = {
         "next": next_url,
-        "total": len(results),
+        "total": total,
         "loads": results
     }
     return jsonify(output)
@@ -51,6 +57,10 @@ def create_load(request: flask.Request):
     json = request.get_json()
     try:
         volume = json['volume']
+        try:
+            volume = int(volume)
+        except ValueError:
+            return jsonify({'error': 'Volume must be an integer.'}), 400
         item = json['item']
         creation_date = json['creation_date']
     except KeyError as e:
@@ -110,14 +120,49 @@ def put_load(load):
     json = request.get_json()
     try:
         volume = json['volume']
+        try:
+            volume = int(volume)
+        except ValueError:
+            return jsonify({'error': 'Volume must be an integer.'}), 400
         item = json['item']
         creation_date = json['creation_date']
     except KeyError as e:
         return jsonify({'Error': "The request object is missing at least one of the required attributes"}), 400
+    else:
+        load['volume'] = volume
+        load['item'] = item
+        load['creation_date'] = creation_date
+        client.put(load)
+
+        res = dict(load)
+        res['id'] = load.id
+        res['self'] = f'{request.host_url}loads/{load.id}'
+
+        return jsonify(res), 200
 
 
 def patch_load(load):
-    pass
+    json = request.json
+    creation_date = json['creation_date'] if 'creation_date' in json else None
+    item = json['item'] if 'item' in json else None
+    if 'volume' in json:
+        try:
+            volume = int(json['volume'])
+        except ValueError:
+            return jsonify({'error': 'Volume must be an integer.'}), 400
+    else:
+        volume = None
+
+    load['creation_date'] = creation_date if creation_date else load['creation_date']
+    load['item'] = item if item else load['item']
+    load['volume'] = volume if volume else load['volume']
+    client.put(load)
+
+    res = dict(load)
+    res['id'] = load.id
+    res['self'] = f'{request.host_url}loads/{load.id}'
+
+    return jsonify(res), 200
 
 
 def delete_load(key, load):
@@ -126,7 +171,6 @@ def delete_load(key, load):
         boat_key = client.key('Boat', int(boat_id))
         boat = client.get(boat_key)
         for l in boat['loads']:
-            print(l['id'], type(l['id']))
             if l['id'] == load.id:
                 boat['loads'].remove(l)
             client.put(boat)

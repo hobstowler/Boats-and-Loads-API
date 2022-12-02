@@ -31,9 +31,10 @@ def decode_jwt(token):
     except Exception:
         return None
 
+
 def require_jwt(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         payload = verify_jwt(request)
-        return func(payload)
+        return func(*args, **kwargs, payload=payload)
     return wrapper

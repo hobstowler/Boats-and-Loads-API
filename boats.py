@@ -9,22 +9,30 @@ client = datastore.Client()
 bp = Blueprint('boats', __name__, url_prefix='/boats')
 
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 @require_jwt
 def boats(payload):
     if payload is None:
-        return '', 401
+        return jsonify({'error': 'JWT missing, expired, or invalid'}), 401
+
+    if not request.accept_mimetypes.accept_json:
+        return '', 406
 
     sub = payload['sub']
     if request.method == 'GET':  # get all boats
         return get_boats(sub)
     elif request.method == 'POST':  # create a boat
+        if not request.is_json:
+            return '', 415
         return create_boat(request, sub)
+    else:
+        return '', 405
 
 
 def get_boats(sub):
     query = client.query(kind="Boat")
     query.add_filter('captain_id', '=', sub)
+    total = len(list(query.fetch()))
     limit = int(request.args.get('limit', '5'))
     offset = int(request.args.get('offset', '0'))
     l_iterator = query.fetch(limit=limit, offset=offset)
@@ -37,10 +45,6 @@ def get_boats(sub):
         next_url = None
 
     results = []
-    output = {
-        "next": next_url,
-        "boats": results
-    }
     for boat in boats:
         res = dict(boat)
         res['id'] = boat.id
@@ -49,6 +53,11 @@ def get_boats(sub):
             for load in boat['loads']:
                 load['self'] = f'{request.host_url}loads/{load["id"]}'
         results.append(res)
+    output = {
+        "next": next_url,
+        "total": total,
+        "boats": results
+    }
     return jsonify(output), 200
 
 
@@ -58,6 +67,10 @@ def create_boat(request: flask.Request, sub):
         name = json['name']
         boat_type = json['type']
         length = json['length']
+        try:
+            length = int(length)
+        except ValueError:
+            return jsonify({'error': 'Length must be an integer.'}), 400
     except KeyError as e:
         return jsonify({'Error': "The request object is missing at least one of the required attributes"}), 400
     else:
@@ -76,7 +89,7 @@ def create_boat(request: flask.Request, sub):
         return jsonify(res), 201
 
 
-@bp.route('/<boat_id>', methods=['GET', 'DELETE', 'PATCH'])
+@bp.route('/<boat_id>', methods=['GET', 'DELETE', 'PUT', 'PATCH'])
 @require_jwt
 def boat(boat_id: str, payload):
     if payload is None:
@@ -85,21 +98,32 @@ def boat(boat_id: str, payload):
     key = client.key('Boat', int(boat_id))
     boat = client.get(key)
 
-    sub = payload['sub']
-    boat = None if not is_owner(boat, sub) else boat
-
     # if boat does not exist, then return 404
     if not boat:
-        return jsonify({"Error": "No boat with this boat_id exists or this boat is owned by someone else."}), 404
+        return jsonify({"Error": "No boat with this boat_id exists."}), 404
+
+    sub = payload['sub']
+    if not is_owner(boat, sub):
+        return jsonify({"error": "The boat with this boat id is owned by another captain."}), 403
 
     if request.method == 'GET':  # get an existing boat
+        if not request.accept_mimetypes.accept_json:
+            return '', 406
         return get_boat(request, boat)
 
     elif request.method == 'DELETE':  # delete an existing boat and delete any loads
         return delete_boat(key, boat)
 
-    elif request.method == 'PATCH':  # edit an existing boat
-        return edit_boat(boat, request)
+    elif request.method in ['PUT', 'PATCH']:
+        if not request.is_json:
+            return '', 415
+        if not request.accept_mimetypes.accept_json:
+            return '', 406
+
+        if request.method == 'PUT':  # edit an existing boat
+            return edit_boat(boat, request)
+        elif request.method == 'PATCH':  # patch an existing boat
+            return patch_boat(boat, request)
 
 
 def get_boat(request, boat):
@@ -121,6 +145,10 @@ def edit_boat(boat, request):
         name = json['name']
         boat_type = json['type']
         length = json['length']
+        try:
+            length = int(length)
+        except ValueError:
+            return jsonify({'error': 'Length must be an integer.'}), 400
     except KeyError as e:
         return jsonify({'Error': "The request object is missing at least one of the required attributes"}), 400
     else:
@@ -131,6 +159,7 @@ def edit_boat(boat, request):
 
         res = dict(boat)
         res['id'] = boat.id
+        res['self'] = f'{request.base_url}{boat.id}'
 
         return jsonify(res), 200
 
@@ -139,7 +168,13 @@ def patch_boat(boat, request):
     json = request.json
     name = json['name'] if 'name' in json else None
     boat_type = json['type'] if 'type' in json else None
-    length = json['length'] if 'length' in json else None
+    if 'length' in json:
+        try:
+            length = int(json['length'])
+        except ValueError:
+            return jsonify({'error': 'Length must be an integer.'}), 400
+    else:
+        length = None
 
     boat['name'] = name if name else boat['name']
     boat['type'] = boat_type if boat_type else boat['type']
@@ -148,18 +183,12 @@ def patch_boat(boat, request):
 
     res = dict(boat)
     res['id'] = boat.id
+    res['self'] = f'{request.base_url}{boat.id}'
 
     return jsonify(res), 200
 
 
 def delete_boat(key, boat):
-    query = client.query(kind='Slip')
-    query.add_filter('current_boat', '=', boat.id)
-    slips = query.fetch()
-    for slip in slips:
-        slip['current_boat'] = None
-        client.put(slip)
-
     query = client.query(kind='Load')
     query.add_filter("carrier.id", "=", boat.id)
     loads = query.fetch()
@@ -168,7 +197,7 @@ def delete_boat(key, boat):
         client.put(load)
 
     client.delete(key)
-    return jsonify({}), 204
+    return '', 204
 
 
 @bp.route('/<boat_id>/loads/<load_id>', methods=['PUT', 'DELETE'])
@@ -183,7 +212,8 @@ def loads_on_boats(boat_id, load_id, payload):
     boat = client.get(boat_key)
 
     sub = payload['sub']
-    boat = None if not is_owner(boat, sub) else boat
+    if boat and not is_owner(boat, sub):
+        return jsonify({"error": "The boat with this boat id is owned by another captain."}), 403
 
     if request.method == 'PUT':
         return assign_load_to_boat(boat, load)
@@ -200,7 +230,7 @@ def is_owner(boat, sub):
 def assign_load_to_boat(boat, load):
     if not boat or not load:
         return jsonify({"Error": "No load with this load_id exists or no boat with this "
-                                 "boat_id exists or the boat is owned by someone else."}), 404
+                                 "boat_id exists."}), 404
 
     if load['carrier']:
         return jsonify({"Error": "The load is already loaded on another boat"}), 403
@@ -210,13 +240,13 @@ def assign_load_to_boat(boat, load):
     client.put(boat)
     client.put(load)
 
-    return jsonify({}), 204
+    return '', 204
 
 
 def remove_load_from_boat(boat, load):
     if not load or not boat or not load['carrier']:
         return jsonify({"Error": "No boat with this boat_id is loaded with the load with "
-                                 "this load_id or the boat is owned by someone else."}), 404
+                                 "this load_id."}), 404
 
     if load['carrier']['id'] != boat.id or \
             (len(boat['loads']) != 0 and load.id not in [k['id'] for k in list(boat['loads'])]):
@@ -230,4 +260,4 @@ def remove_load_from_boat(boat, load):
     client.put(boat)
     client.put(load)
 
-    return jsonify({}), 204
+    return '', 204
