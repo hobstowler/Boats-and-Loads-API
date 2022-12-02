@@ -92,11 +92,18 @@ def load(load_id: str):
         return jsonify({'Error': "No load with this load_id exists"}), 404
 
     if request.method == 'GET':
+        if not request.accept_mimetypes.accept_json:
+            return '', 406
         return get_load(load)
-    elif request.method == 'PUT':
-        return put_load(load)
-    elif request.method == 'PATCH':
-        return patch_load(load)
+    elif request.method in ['PUT', 'PATCH']:
+        if not request.accept_mimetypes.accept_json:
+            return '', 406
+        if not request.is_json:
+            return '', 415
+        if request.method == 'PUT':
+            return put_load(load)
+        elif request.method == 'PATCH':
+            return patch_load(load)
     elif request.method == 'DELETE':
         return delete_load(key, load)
 
