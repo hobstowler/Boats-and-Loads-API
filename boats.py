@@ -204,7 +204,7 @@ def delete_boat(key, boat):
 @require_jwt
 def loads_on_boats(boat_id, load_id, payload):
     if payload is None:
-        return '', 401
+        return jsonify({'error': 'JWT missing, expired, or invalid'}), 401
 
     load_key = client.key('Load', int(load_id))
     load = client.get(load_key)
