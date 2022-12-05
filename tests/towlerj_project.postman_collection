@@ -1,0 +1,5183 @@
+{
+	"info": {
+		"_postman_id": "c2b9d222-0511-4da2-b640-17f27c94216f",
+		"name": "cs493-final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23706624"
+	},
+	"item": [
+		{
+			"name": "get all boats html - 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 405', () => {\r",
+							"    pm.response.to.have.status(405)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 405', () => {\r",
+							"    pm.response.to.have.status(405)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 405', () => {\r",
+							"    pm.response.to.have.status(405)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats no jwt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.environment.set(\"total_boats_user2\", pm.response.json().total);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.environment.set(\"total_boats_user1\", pm.response.json().total);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat no jwt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"WSB\",\r\n    \"length\": \"35\",\r\n    \"type\": \"Catamaran\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat user 1 missing attribute",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"WSB\",\r\n    \"length\": \"35\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat user 1 bad length",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})\r",
+							"\r",
+							"pm.test('error message matches', () => {\r",
+							"    pm.expect(pm.response.json()[\"error\"]).to.eq(\"Length must be an integer.\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"WSB\",\r\n    \"length\": \"35a\",\r\n    \"type\": \"Catamaran\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat user 1 html - 415",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 415', () => {\r",
+							"    pm.response.to.have.status(415)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat1_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat user 1 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 2 - same count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"total = parseInt(pm.environment.get(\"total_boats_user2\"))\r",
+							"pm.test('expected total', () => {\r",
+							"    pm.expect(pm.response.json().total).to.eq(total)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 1 - plus one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"total = parseInt(pm.environment.get(\"total_boats_user1\"))\r",
+							"pm.test('expected total', () => {\r",
+							"    pm.expect(pm.response.json().total).to.eq(total + 1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"let name = pm.environment.get(\"boat1_name\")\r",
+							"let length = parseInt(pm.environment.get(\"boat1_length\"))\r",
+							"let type = pm.environment.get(\"boat1_type\")\r",
+							"\r",
+							"pm.test('expected attributes', () => {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(name);\r",
+							"    pm.expect(pm.response.json()[\"length\"]).to.eq(length);\r",
+							"    pm.expect(pm.response.json()[\"type\"]).to.eq(type);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat html",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get invalid boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat wrong user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 403', () => {\r",
+							"    pm.response.to.have.status(403)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch invalid boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch boat with html",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch boat html",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 415', () => {\r",
+							"    pm.response.to.have.status(415)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch boat bad length",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"length\": \"abc\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch boat no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch boat wrong user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 403', () => {\r",
+							"    pm.response.to.have.status(403)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat after patch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"let name = pm.environment.get(\"boat1_name_new\")\r",
+							"let length = parseInt(pm.environment.get(\"boat1_length\"))\r",
+							"let type = pm.environment.get(\"boat1_type\")\r",
+							"\r",
+							"pm.test('expected attributes', () => {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(name);\r",
+							"    pm.expect(pm.response.json()[\"length\"]).to.eq(length);\r",
+							"    pm.expect(pm.response.json()[\"type\"]).to.eq(type);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Boat missing attributes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\",\r\n    \"length\": {{boat1_length_new}},\r\n    \"type\": \"{{boat1_type_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Invalid Boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\",\r\n    \"length\": {{boat1_length_new}},\r\n    \"type\": \"{{boat1_type_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Boat no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\",\r\n    \"length\": {{boat1_length_new}},\r\n    \"type\": \"{{boat1_type_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Boat wrong user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 403', () => {\r",
+							"    pm.response.to.have.status(403)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\",\r\n    \"length\": {{boat1_length_new}},\r\n    \"type\": \"{{boat1_type_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Boat bad length",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name_new}}\",\r\n    \"length\": \"abc\",\r\n    \"type\": \"{{boat1_type_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat after put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"let name = pm.environment.get(\"boat1_name_new\")\r",
+							"let length = parseInt(pm.environment.get(\"boat1_length_new\"))\r",
+							"let type = pm.environment.get(\"boat1_type_new\")\r",
+							"\r",
+							"pm.test('expected attributes', () => {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(name);\r",
+							"    pm.expect(pm.response.json()[\"length\"]).to.eq(length);\r",
+							"    pm.expect(pm.response.json()[\"type\"]).to.eq(type);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.environment.set(\"total_boats_user1\", pm.response.json().total);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat wrong user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 403', () => {\r",
+							"    pm.response.to.have.status(403)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"total = pm.environment.get(\"total_boats_user1\");\r",
+							"pm.test('one less boat', () => {\r",
+							"    pm.expect(pm.response.json()[\"total\"]).to.eq(total - 1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load missing attributes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load bad volume",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 400', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": \"a\",\r\n    \"item\": \"{{load1_item}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load1_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load bad content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 415', () => {\r",
+							"    pm.response.to.have.status(415)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load no json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get new load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"create_dt = pm.environment.get(\"load1_creation_date\")\r",
+							"item = pm.environment.get(\"load1_item\")\r",
+							"volume = parseInt(pm.environment.get(\"load1_volume\"))\r",
+							"\r",
+							"pm.test('expected attributes', () => {\r",
+							"    pm.expect(pm.response.json()[\"item\"]).to.eq(item)\r",
+							"    pm.expect(pm.response.json()[\"creation_date\"]).to.eq(create_dt)\r",
+							"    pm.expect(pm.response.json()[\"volume\"]).to.eq(volume)\r",
+							"    pm.expect(pm.response.json()[\"carrier\"]).to.be.null\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get new load no json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () =>{\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get loads no json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () =>{\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get invalid load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () =>{\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all loads",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 405', () =>{\r",
+							"    pm.response.to.have.status(405)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put all loads",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 405', () =>{\r",
+							"    pm.response.to.have.status(405)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch all loads",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 405', () =>{\r",
+							"    pm.response.to.have.status(405)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}}\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch invalid load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}}\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch load no json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 415', () => {\r",
+							"    pm.response.to.have.status(415)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}}\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch load bad accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}}\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load after patch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"create_dt = pm.environment.get(\"load1_creation_date\")\r",
+							"item = pm.environment.get(\"load1_item\")\r",
+							"volume = parseInt(pm.environment.get(\"load1_volume_new\"))\r",
+							"\r",
+							"pm.test('expected attributes', () => {\r",
+							"    pm.expect(pm.response.json()[\"item\"]).to.eq(item)\r",
+							"    pm.expect(pm.response.json()[\"creation_date\"]).to.eq(create_dt)\r",
+							"    pm.expect(pm.response.json()[\"volume\"]).to.eq(volume)\r",
+							"    pm.expect(pm.response.json()[\"carrier\"]).to.be.null\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}},\r\n    \"item\": \"{{load1_item_new}}\",\r\n    \"creation_date\": \"{{load1_creation_date_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put invalid load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}},\r\n    \"item\": \"{{load1_item_new}}\",\r\n    \"creation_date\": \"{{load1_creation_date_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put invalid bad accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 406', () => {\r",
+							"    pm.response.to.have.status(406)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}},\r\n    \"item\": \"{{load1_item_new}}\",\r\n    \"creation_date\": \"{{load1_creation_date_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put bad content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 415', () => {\r",
+							"    pm.response.to.have.status(415)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume_new}},\r\n    \"item\": \"{{load1_item_new}}\",\r\n    \"creation_date\": \"{{load1_creation_date_new}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load after put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"create_dt = pm.environment.get(\"load1_creation_date_new\")\r",
+							"item = pm.environment.get(\"load1_item_new\")\r",
+							"volume = parseInt(pm.environment.get(\"load1_volume_new\"))\r",
+							"\r",
+							"pm.test('expected attributes', () => {\r",
+							"    pm.expect(pm.response.json()[\"item\"]).to.eq(item)\r",
+							"    pm.expect(pm.response.json()[\"creation_date\"]).to.eq(create_dt)\r",
+							"    pm.expect(pm.response.json()[\"volume\"]).to.eq(volume)\r",
+							"    pm.expect(pm.response.json()[\"carrier\"]).to.be.null\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get loads before delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"total_loads\", pm.response.json().total);\r",
+							"\r",
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete invalid load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/loads/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get loads after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"total = pm.environment.get(\"total_loads\")\r",
+							"\r",
+							"pm.test('total less 1', () => {\r",
+							"    pm.expect(pm.response.json().total).to.eq(total - 1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get loads before - pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"total_loads\", pm.response.json().total);\r",
+							"\r",
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load1_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load2_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load3_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load4_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load5_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new load6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"load6_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"volume\": {{load1_volume}},\r\n    \"item\": \"{{load1_item}}\",\r\n    \"creation_date\": \"{{load1_creation_date}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get loads after - pagination",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () =>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"total = pm.environment.get(\"total_loads\")\r",
+							"\r",
+							"pm.test('total plus 6', () => {\r",
+							"    pm.expect(pm.response.json().total).to.eq(total + 6)\r",
+							"})\r",
+							"pm.test('paginated (5)', () => {\r",
+							"    pm.expect(pm.response.json().loads.length).to.lte(5)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/loads",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.environment.set(\"total_boats_user1\", pm.response.json().total);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.environment.set(\"total_boats_user2\", pm.response.json().total);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat1 user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat1_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat2 user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat2_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat3 user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat3_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat4 user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat4_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat5 user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat5_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new boat6 user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"boat6_id\", pm.response.json().id);\r",
+							"\r",
+							"pm.test('response 201', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{boat1_name}}\",\r\n    \"length\": {{boat1_length}},\r\n    \"type\": \"{{boat1_type}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats after delete Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"total = pm.environment.get(\"total_boats_user1\");\r",
+							"pm.test('6 more boats', () => {\r",
+							"    pm.expect(pm.response.json()[\"total\"]).to.eq(total + 6)\r",
+							"})\r",
+							"pm.test('paginated (5)', () => {\r",
+							"    pm.expect(pm.response.json().boats.length).to.be.lte(5)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all boats user 2 - same count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"total = parseInt(pm.environment.get(\"total_boats_user2\"))\r",
+							"pm.test('expected total', () => {\r",
+							"    pm.expect(pm.response.json().total).to.eq(total)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load on boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load on invalid boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/1/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"1",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put invalid load on boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load on boat no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 401', () => {\r",
+							"    pm.response.to.have.status(401)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load on boat wrong user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 403', () => {\r",
+							"    pm.response.to.have.status(403)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load on second boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 403', () => {\r",
+							"    pm.response.to.have.status(403)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat2_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat2_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove wrong load from boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load2_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove invalid load from boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove valid load from invalid boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/1/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"1",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove valid load from wrong boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat2_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat2_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove load from boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load on boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put load2 on boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}/loads/{{load2_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}",
+						"loads",
+						"{{load2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat with load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.environment.set(\"load_size\", pm.response.json().loads.length);\r",
+							"\r",
+							"pm.test('not null load', () => {\r",
+							"    pm.expect(pm.response.json().loads.length).to.gte(1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load2 while on boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load2_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get boat after deleting load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"let load_size = pm.environment.get(\"load_size\");\r",
+							"\r",
+							"pm.test('load less 1', () => {\r",
+							"    pm.expect(pm.response.json().loads.length).to.eq(load_size - 1)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load after loading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.test('not null carrier', () => {\r",
+							"    pm.expect(pm.response.json().carrier).to.not.be.null\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat with load",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get deleted boat",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 404', () => {\r",
+							"    pm.response.to.have.status(404)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get load after boat deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 200', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"pm.test('null carrier', () => {\r",
+							"    pm.expect(pm.response.json().carrier).to.be.null\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load1_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load3_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load4_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load4_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load5_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load5_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete load6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/loads/{{load6_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"loads",
+						"{{load6_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat2_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat3_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat4_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat4_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat5_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat5_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete boat6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('response 204', () => {\r",
+							"    pm.response.to.have.status(204)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/boats/{{boat6_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"boats",
+						"{{boat6_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
